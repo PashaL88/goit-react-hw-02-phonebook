@@ -27,9 +27,9 @@ class ContactForm extends Component  {
     const { name, number } = this.state;
     const { handleSubmit, handleChange} = this;
     return (
-          <form action="" onSubmit={handleSubmit}>
+          <form className={styles.form} action="" onSubmit={handleSubmit}>
             <p>Name</p>
-            <input value={name} type="tel" onChange={handleChange}
+            <input className={styles.input} value={name} type="tel" onChange={handleChange}
               name="name" placeholder="name" />
             <p>Number</p>
             <input value={number}
@@ -40,7 +40,7 @@ class ContactForm extends Component  {
   title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
   required
 />
-            <button type="submit">Add contact</button>
+            <button className={styles.button} type="submit">Add contact</button>
           </form>
 )
   }
