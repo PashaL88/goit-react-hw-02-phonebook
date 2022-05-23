@@ -1,17 +1,26 @@
 import { Component } from "react";
-import {nanoid} from "nanoid"
+import { nanoid } from "nanoid"
+import ContactForm from "./ContactForm";
+import ContactList from "./ContactList";
+import Filter from "./Filter";
 
 class App extends Component  {
   state = {
   contacts: [],
-    name: '',
-  number: '',
+  filter: '',
   }
   
-  addContact = (event) => {
-    event.preventDefault();
+  addContact = (data) => {
+    const { name } = data;
+    const { contacts } = this.state;
+    const dublicate = contacts.find(contact => contact.name === name)
+      if (dublicate) {
+        alert(`${name} is already in contacts`)
+        return
+      }
     this.setState(prevState => {
-      const { contacts, name, number } = prevState;
+      const { contacts} = prevState;
+      const { name, number } = data;
       const newContact = {
         name,
         number,
@@ -21,6 +30,7 @@ class App extends Component  {
           contacts: [...contacts, newContact],
           name: "",
           number: "",
+          filter: '',
          }
       }
     )
@@ -33,38 +43,44 @@ class App extends Component  {
     })
   }
 
-  render() {
-    const { contacts } = this.state;
-    const { addContact, handleChange } = this;
+  changeFilter = ({target}) => {
+    this.setState({
+      filter: target.value,
+    })
+  }
 
-    const elements = contacts.map(({id, name, number }) => (
-      <li key={id}>{name}: {number}</li>
-    ))
+  deleteContact = (id) => {
+    this.setState(prevState => {
+      const { contacts } = prevState;
+      return {
+        contacts: contacts.filter((contact) => contact.id !== id)
+      }
+})
+  }
+
+  getFilteredContacts() {
+    const { filter, contacts } = this.state;
+    if(!filter) { return contacts}
+    const filterText = filter.toLowerCase();
+    const filteredContacts = contacts.filter(({name}) => {
+      const result = name.toLowerCase().includes(filterText)
+      return result
+    })
+    return filteredContacts
+  }
+
+  render() {
+    const {  filter } = this.state;
+    const { addContact, changeFilter, deleteContact } = this;
+    const contacts = this.getFilteredContacts();
+    
     return (
       <div>
-        <section>
-          <h2>Phonebook</h2>
-          <form action="" onSubmit={addContact}>
-            <input type="tel" onChange={handleChange}
-              name="name" />
-            <h2>Number</h2>
-            <input
-              type="tel"
-              onChange={handleChange}
-  name="number"
-  pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-  title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-  required
-/>
-            <button type="submit">Add contact</button>
-          </form>
-        </section>
-        <section>
+          <h1>Phonebook</h1>
+        <ContactForm onSubmit={addContact}/>
           <h2>Contacts</h2>
-        <ul>
-          {elements}
-          </ul>
-          </section>
+          <Filter filter={filter} changeFilter={changeFilter} />
+        <ContactList contacts={contacts} deleteContact={deleteContact } />
   </div>
 )
   }
