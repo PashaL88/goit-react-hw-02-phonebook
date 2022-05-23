@@ -10,3 +10,4 @@ const ContactList = ({ contacts, deleteContact }) => {
 }
 
 export default ContactList
+
