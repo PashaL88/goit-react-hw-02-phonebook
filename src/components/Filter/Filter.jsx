@@ -12,5 +12,7 @@ const Filter = ({ filter, changeFilter }) => {
 export default Filter;
 
 Filter.propTypes = {
-    filter: PropTypes.string.isRequired
+    filter: PropTypes.string.isRequired,
+    changeFilter: PropTypes.func.isRequired
+
 }

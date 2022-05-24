@@ -31,8 +31,6 @@ class App extends Component  {
       }
         return { 
           contacts: [...contacts, newContact],
-          name: "",
-          number: "",
           filter: '',
          }
       }
