@@ -39,13 +39,6 @@ class App extends Component  {
     )
   }
 
-  handleChange = ({target}) => {
-    const { name, value } = target;
-    this.setState({
-      [name]: value,
-    })
-  }
-
   changeFilter = ({target}) => {
     this.setState({
       filter: target.value,
@@ -84,7 +77,8 @@ class App extends Component  {
           <h2>Contacts</h2>
           <Filter filter={filter} changeFilter={changeFilter} />
         <ContactList contacts={contacts} deleteContact={deleteContact } />
-  </div>
+      </div>
+      
 )
   }
 }

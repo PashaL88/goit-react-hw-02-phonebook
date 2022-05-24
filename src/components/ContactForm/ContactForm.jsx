@@ -32,7 +32,7 @@ class ContactForm extends Component  {
             <input className={styles.input} value={name} type="tel" onChange={handleChange}
               name="name" placeholder="name" />
             <p>Number</p>
-            <input value={number}
+            <input className={styles.input} value={number}
               type="tel"
               onChange={handleChange}
   name="number" placeholder="tel"

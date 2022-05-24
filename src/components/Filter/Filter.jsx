@@ -1,4 +1,6 @@
-const Filter = ({filter, changeFilter}) => {
+import PropTypes from "prop-types";
+
+const Filter = ({ filter, changeFilter }) => {
     return (<>
         <p>Find contacts by name</p>
           <input value={filter} type="tel" onChange={changeFilter}
@@ -8,3 +10,7 @@ const Filter = ({filter, changeFilter}) => {
 }
 
 export default Filter;
+
+Filter.propTypes = {
+    filter: PropTypes.string.isRequired
+}
